@@ -1,2 +1,6 @@
 enableGlobalVirtualStore: true
+minimumReleaseAgeExclude:
+  - '@ghia/native@0.13.0'
+  - '@ghia/solid@0.13.0'
+  - ghia@0.13.0
 packageImportMethod: clone-or-copy
