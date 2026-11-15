@@ -1,6 +1,6 @@
 # API shape, layout and packaging decisions
 
-Why the port is headless `create*` functions laid out file-for-file like Base UI, and the packaging rules that keep it usable both as source and as the npm package. The _what_ is in [UPSTREAM.md](../../UPSTREAM.md) ("API shape", "File map", "Port-only files").
+Why the port is headless `create*` functions laid out file-for-file like Base UI, and the packaging rules that keep it usable both as source and as the npm package. The _what_ is in [PORTING.md](../../PORTING.md) ("Public API differences") and [UPSTREAM.md](../../UPSTREAM.md) ("File map", "Port-only files").
 
 ## Headless `create*` functions, not compound components
 

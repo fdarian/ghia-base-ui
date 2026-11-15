@@ -46,7 +46,7 @@ git -C ~/.claude/notes/base-ui-source checkout v1.9.0
    change to that file can touch. For each: does the behaviour still hold? Update the port and the row's Status and
    Notes; add a row for a new behaviour FF uses. Upstream line numbers move with every edit, so re-pin the "Base UI
    ref" cells of changed files as you go.
-3. **Port each change** to the file the [map](#file-map) names, then refresh the port refs in the audit rows
+3. **Port each change** to the file the [map](#file-map) names, following [PORTING.md](PORTING.md), then refresh the port refs in the audit rows
    (`src/...:lines` for this repo, `ff:src/...:lines` for FF code).
 4. **Check FF.** A primitive's shape change (a renamed option, a moved prop) lands in FF's consumer too. Run
    `pnpm check` in FF, which installs and links this folder; this repo's own `pnpm check` is `tsc` plus headless
@@ -58,7 +58,7 @@ git -C ~/.claude/notes/base-ui-source checkout v1.9.0
 
 Upstream paths are relative to `packages/react/src/`; port paths to `src/`. A grouped row reads as "each file on the
 left lands in the matching file on the right". Upstream names are PascalCase (`AccordionRoot.tsx`); the port's are
-kebab-case, `use-*.ts` where upstream has a `use*` hook and `create*` is the exported function.
+kebab-case and the exported function is `create*`. [PORTING.md](PORTING.md#naming) says which folders prefix their files with `use-`.
 
 | Upstream                                                                                                                                                                                   | Port                                                                                                                                                                        |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -139,24 +139,7 @@ No upstream file; each exists because ghia or FF needs it.
 
 ## API shape
 
-Base UI is React compound components; this port is headless `create*` functions.
-
-- **A function per part, not a component.** `createSelectRoot(options)` returns accessors and prop objects
-  (`triggerProps`, `popupProps`, `itemProps(item, index)`) that the consumer spreads on its own `@ghia/solid` elements. There is
-  no styling, no theme token and no animation library in this repo; timings and sizes arrive as options.
-- **Refs are returned as functions.** A spread `ref` applies late in `@ghia/solid` JSX, after props that depend on the element
-  (for instance a row's `tabIndex` against the open's focus), so the primitives return ref functions and the consumer
-  sets props and refs one by one where order matters.
-- **Controllable highlight with reasons.** Select, Combobox and Menu take the highlighted index as an option and report
-  every change through `onHighlightChange(index, reason)` with a reason (`keyboard`, `typeahead`, `focus`, `pointer`,
-  `reset`, and so on), so the consumer's own highlight (fluid hover) can follow or ignore it.
-- **Pointer highlight belongs to the consumer.** Base UI highlights on hover itself. Here the consumer's fluid hover owns
-  it, and the menu list takes its pointer handlers (`pointer: { onMouseEnter, onMouseMove, onMouseLeave }`).
-- **Dialogs build on `@ghia/solid`'s `Dialog` family.** The dialog and drawer hooks return props for `@ghia/solid`'s `Dialog` and its
-  popup instead of re-implementing the layer, focus trap and Escape stack; `FocusFirst` and `mark-others` cover what
-  Base UI's focus manager and `markOthers` do beyond it.
-- **One `@ghia/solid` instance.** The primitives import `@ghia/solid` and `solid-js` as peers; see the README for the
-  single-instance rule.
+Headless `create*` functions instead of React components: see [PORTING.md](PORTING.md#public-api-differences).
 
 ## Deviations
 
