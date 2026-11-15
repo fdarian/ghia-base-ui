@@ -130,7 +130,7 @@ Row by row, against ZerNico's table of the same name:
 
 ### Elements: no JSX in `src`
 
-`@ghia/solid`'s Bun plugin skips `node_modules`, so a published `.tsx` would not compile. Build host elements with `jsx()` from
+The npm build is tsdown's plain JS, and ghia 0.12's `ghia:solid-libraries` path compiles library JSX only under ghia's Vite `solid()` plugin (untested here), so a published `.tsx` is not safe. Build host elements with `jsx()` from
 `@ghia/solid/jsx-runtime` (`utils/form-value.ts`), passing reactive attributes as getters. A part that upstream renders as an
 element returns props and refs instead.
 
@@ -150,7 +150,7 @@ element returns props and refs instead.
     child takes focus, not the wrapper). `onFocus` / `onBlur` stay where the handler is on the element that takes focus
     (`menu-item.ts`, `use-select-root.ts`).
   - `onChange` on a text control → `onInput`: React's `onChange` is the per-edit event; on current ghia that is `input`, and
-    `change` is the commit. See Known pitfalls for the combobox.
+    `change` is the commit (`combobox/root/use-combobox-root.ts`).
   - `onMouseEnter` / `onMouseLeave` do not bubble in either framework.
 - A coordinate or value an event may lack is not defaulted: throw (`toHoverEvent` in `use-hover-reference-interaction.ts`).
 
@@ -239,10 +239,10 @@ the Solid 1 idiom is the one to use.
 
 ## Tests
 
-`bun test` runs headless (`bunfig.toml` preloads `@ghia/solid/preload`); `pnpm check:test`, `pnpm check:type` and `pnpm check`
-run them. There is no browser matrix and no Vitest.
+Vitest runs headless through `bun --bun vitest run` (`vitest.config.ts` loads the `ghia()` and `solid()` plugins);
+`pnpm check:test`, `pnpm check:type` and `pnpm check` run them. There is no browser matrix.
 
-- A test sits beside its file (`<file>.test.ts`) and drives the `create*` function directly, with `bun:test`. Wrap anything
+- A test sits beside its file (`<file>.test.ts`) and drives the `create*` function directly, with `vitest`. Wrap anything
   that makes effects or memos in `createRoot` (`menu/list/menu-list.test.ts`), and pass handlers literal `KeyEvent` or
   `DomEvent` objects.
 - When porting a behaviour, port the scenario of upstream's test for it (`X.test.tsx`, and ZerNico's port of that test shows
@@ -254,10 +254,6 @@ run them. There is no browser matrix and no Vitest.
 
 ## Known pitfalls
 
-- **`onChange` on a text control.** React's `onChange` is the per-edit event. Current ghia fires `input` per edit and `change`
-  on commit (ghia `docs/fork/events-and-input.md`, "Text controls fire the DOM's input per edit and change on commit"), so the
-  rule above says `onInput`. `combobox/root/use-combobox-root.ts` still uses `onChange` and reads `event.value`; with the dev
-  dependency `@ghia/solid` 0.11.1 that is what it needs, and it needs checking against any newer ghia.
 - **Their code is ahead of the pin.** Copy structure, not behaviour you have not diffed (step 2 above).
 - **Do not copy their derived stores.** They replace upstream's layout-effect syncing with derived keys to satisfy Solid 2's
   diagnostics. Here the state is plain signals; derive instead of copying where it is free, as `open()` does.
