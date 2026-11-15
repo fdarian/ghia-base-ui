@@ -1,4 +1,2 @@
 enableGlobalVirtualStore: true
 packageImportMethod: clone-or-copy
-# pnpm's pre-script auto-install would run from this folder and relink a second @ghia/solid (see AGENTS.md).
-verifyDepsBeforeRun: false
