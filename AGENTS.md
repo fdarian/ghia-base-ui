@@ -6,6 +6,8 @@ Headless Base UI primitives for Solid on `@ghia/solid`, ported from `@base-ui/re
 - Component folders: `accordion collapsible tabs checkbox checkbox-group radio radio-group switch slider menu select combobox dialog drawer popover tooltip scroll-area`. Each exports `create*` functions returning state and prop objects, not components.
 - Shared: `internals/` (composite key navigation and `createRowList`, `filter`, `use-transition-status`, `use-anchor-positioning`), `floating-ui-solid/` (click, typeahead, `safe-polygon` with the hover tracker that runs it, `mark-others`), `utils/` (`pointer-capture`, `form-value`).
 - [UPSTREAM.md](UPSTREAM.md) — the pin, how to sync, the upstream-to-port file map and the port-only files; read before moving the pin or adding a primitive.
+- [PORTING.md](PORTING.md) — how to translate Base UI's React into this repo's Solid 1, and how to use ZerNico's Solid 2 port as the pattern reference; read before porting or filling an audit gap.
+- [GLOSSARY.md](GLOSSARY.md) — Popup, Root, Trigger, Anchor, Hover intent and the identifiers that carry them in `src/`; read with PORTING.md.
 - [Base UI audit](./.agents/notes/base-ui-audit.md) — Base UI vs port, row by row, with `src/...` and `ff:src/...` refs; update the rows you touch.
 - Files use relative imports, never `#/*`: the consumer compiles this source with its own tsconfig.
 - No JSX in `src`: `@ghia/solid`'s Bun plugin skips `node_modules`, so a published `.tsx` would not compile. Build host elements with `jsx()` from `@ghia/solid/jsx-runtime` (see `utils/form-value.ts`).
