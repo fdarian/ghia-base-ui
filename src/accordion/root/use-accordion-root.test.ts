@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'bun:test';
+import { describe, expect, test } from 'vitest';
 import { createAccordionItem } from '../item/use-accordion-item';
 import { createAccordionRoot } from './use-accordion-root';
 

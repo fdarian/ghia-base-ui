@@ -45,13 +45,18 @@ export function createMenuRoot(props: MenuRootProps, config: MenuRootConfig) {
 		const target = triggerElement;
 		triggerElement = null;
 		if (target === null || !target.mounted) return;
-		if (popupHasFocus() || document.activeElement === null) target.focus();
+		if (popupHasFocus() || document.activeElement === document.body)
+			target.focus();
 	};
 
 	const apply = (next: boolean) => {
 		if (next === presence.open()) return;
 		if (next) {
-			triggerElement = pendingTrigger ?? document.activeElement;
+			triggerElement =
+				pendingTrigger ??
+				(document.activeElement === document.body
+					? null
+					: document.activeElement);
 			pendingTrigger = null;
 			presence.show();
 		} else {

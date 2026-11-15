@@ -58,7 +58,7 @@ export function createCompositeRoot(options: CompositeRootOptions) {
 	const focus = (index: number) => {
 		const item = items.get(index);
 		if (item === undefined) return;
-		renderer.focusElement?.(item.element.id);
+		renderer.focusElement?.(item.element.nativeId);
 	};
 
 	return {

@@ -64,7 +64,7 @@ export function createRowList(options: {
 		if (targetIndex === undefined) throw new Error('No row to focus');
 		const entry = rows.get(targetIndex);
 		if (entry === undefined) throw new Error(`No row at ${targetIndex}`);
-		focusElement.call(renderer, entry.element.id);
+		focusElement.call(renderer, entry.element.nativeId);
 		if (options.arrowsSelect) entry.activate();
 	};
 

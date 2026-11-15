@@ -1,6 +1,6 @@
 # API shape, layout and packaging decisions
 
-Why the port is headless `create*` functions laid out file-for-file like Base UI, and the packaging rules that keep it usable both as source and as the npm package. The _what_ is in [UPSTREAM.md](../../UPSTREAM.md) ("API shape", "File map", "Port-only files").
+Why the port is headless `create*` functions laid out file-for-file like Base UI, and the packaging rules that keep it usable both as source and as the npm package. The _what_ is in [PORTING.md](../../PORTING.md) ("Public API differences") and [UPSTREAM.md](../../UPSTREAM.md) ("File map", "Port-only files").
 
 ## Headless `create*` functions, not compound components
 
@@ -50,9 +50,8 @@ Both do arrow keys over a list, but the semantics differ and each consumer depen
 
 ## Packaging rules
 
-- **Relative imports only.** FF compiles this source with FF's own tsconfig, so a `#/*` alias would resolve into FF's tree.
-- **Source and npm at once.** `exports` points at `src/*/index.ts` for FF's link; `publishConfig.exports` swaps in the tsdown build at publish, with `solid-js` and `@ghia/solid` external peers.
-- **No JSX in `src`.** `@ghia/solid`'s Bun plugin skips `node_modules`, so a published `.tsx` would not compile. Use `jsx()` from `@ghia/solid/jsx-runtime`.
-- **One runtime instance of `solid-js` and `@ghia/solid`** across both repos; two break context and reactivity silently. A plain `link:` fails because `file:` dependencies get a store path per project directory, so each repo gets its own `@ghia/solid`. FF's pnpm workspace includes this folder and installs run from FF's root; FF's single-instance check guards it.
-- **`verifyDepsBeforeRun: false`** in `pnpm-workspace.yaml`: pnpm 12 auto-installs before running a script, and from this folder that relinks a second `@ghia/solid`. Keep it off.
+- **Relative imports only.** `exports` points at `src/`, so a consumer that resolves it compiles this source with its own tsconfig, where a `#/*` alias would resolve into the consumer's tree.
+- **Source and npm at once.** `exports` points at `src/*/index.ts` for a local checkout; `publishConfig.exports` swaps in the tsdown build at publish, with `solid-js` and `@ghia/solid` external peers. FF installs that build from npm.
+- **No JSX in `src`.** The npm build is tsdown's plain JS, and ghia 0.12's `ghia:solid-libraries` path compiles library JSX only under ghia's Vite `solid()` plugin (untested here). Use `jsx()` from `@ghia/solid/jsx-runtime`.
+- **One runtime instance of `solid-js`** (and of `@ghia/solid`) in any app that uses this package; two break context and reactivity silently. Here the `link:` dev dependencies on ghia's checkout share `solid-js` with it only because both pin 1.9.15 under pnpm's global virtual store; a ghia `solid-js` bump breaks that until this repo's pin follows. The links are temporary, until ghia publishes and the dev dependencies become exact npm versions.
 - **`noUncheckedIndexedAccess` stays on** here. Satisfy it without `!` or fake fallbacks.

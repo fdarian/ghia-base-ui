@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'bun:test';
+import { describe, expect, test } from 'vitest';
 import { getKeyScroll } from './get-key-scroll';
 import { getThumb, overflows } from './get-thumb';
 

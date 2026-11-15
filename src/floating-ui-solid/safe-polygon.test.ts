@@ -1,4 +1,4 @@
-import { expect, spyOn, test } from 'bun:test';
+import { expect, test, vi } from 'vitest';
 import type { HoverEvent } from './hooks/use-hover-shared';
 import { safePolygon } from './safe-polygon';
 
@@ -131,7 +131,7 @@ test('dispose cancels the stop timer', async () => {
 
 test('a pointer that crawls (under 0.1 px/ms) closes it; a quick one does not', () => {
 	let now = 1000;
-	const clock = spyOn(performance, 'now').mockImplementation(() => now);
+	const clock = vi.spyOn(performance, 'now').mockImplementation(() => now);
 	try {
 		const slow = track({ x: 110, y: 199 });
 		slow.handler(leave(110, 199));

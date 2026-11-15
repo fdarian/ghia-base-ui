@@ -1,4 +1,4 @@
-import { expect, test } from 'bun:test';
+import { expect, test } from 'vitest';
 import { createTooltipProvider } from './tooltip-provider';
 
 test('the group reads its delays when asked, so they can change', () => {
