@@ -48,9 +48,9 @@ git -C ~/.claude/notes/base-ui-source checkout v1.9.0
    ref" cells of changed files as you go.
 3. **Port each change** to the file the [map](#file-map) names, following [PORTING.md](PORTING.md), then refresh the port refs in the audit rows
    (`src/...:lines` for this repo, `ff:src/...:lines` for FF code).
-4. **Check FF.** A primitive's shape change (a renamed option, a moved prop) lands in FF's consumer too. Run
-   `pnpm check` in FF, which installs and links this folder; this repo's own `pnpm check` is `tsc` plus headless
-   `bun test`.
+4. **Check FF.** A primitive's shape change (a renamed option, a moved prop) lands in FF's consumer too. FF
+   depends on `ghia-base-ui` from npm, so a shape change reaches it with a release; bump FF's dependency and run its
+   `pnpm check`. This repo's own `pnpm check` is `tsc` plus headless vitest (`pnpm check:test`).
 5. **Move the pin.** Change the version, tag and commit in the table above, the header of
    [.agents/notes/base-ui-audit.md](.agents/notes/base-ui-audit.md), `AGENTS.md`, `README.md` and the `package.json` description.
 
@@ -148,15 +148,14 @@ Base UI 1.9.0's source and this port, row by row. Port refs read `src/...:lines`
 `ff:src/...:lines` for code that stayed in FF. Each row has one **Status**:
 
 - **ported** (190): same behaviour.
-- **gap** (17): fixable in the port and not fixed. Five are ghia capabilities the port has not adopted yet (the note
-  names the API to use); six are the popover's missing controlled `open`, Escape from anywhere, close on focus-out,
+- **gap** (20): fixable in the port and not fixed. Eight are ghia capabilities the port has not adopted yet (the note
+  names the API to use, including CSS `transform` scale for the select and combobox popup entrance and `<input type="range">`
+  for the slider thumb); six are the popover's missing controlled `open`, Escape from anywhere, close on focus-out,
   focus into the popup, focus back to the trigger and Space on key-up; six are FF-only layers that are not Base UI or limits of the demos (select gap click,
   combobox `onCreate`, `variant`, `error` and `size`, mount-order indices for accordion items and tabs, tabs-subtle
   overflow).
 - **fixed (sha)** (182): was a gap, fixed in this port at that commit.
-- **blocked by ghia** (3): ghia still lacks the capability: CSS `transform` scale and rotate (the select and combobox
-  popup entrance) and
-  `<input type="range">` (a native range input under each slider thumb).
+- **blocked by ghia** (0): ghia lacks the capability. No row is blocked today.
 - **n/a** (34): FF overrides the behaviour, or it is out of scope (`DirectionProvider` and RTL, the `active` and
   `asChild` button props, the inline `Dropdown` panel, which is FF's own code, the popover's modal mode, portal,
   trigger id and Title / Description names, nested submenus).
@@ -170,16 +169,16 @@ Base UI 1.9.0's source and this port, row by row. Port refs read `src/...:lines`
 | [Checkbox](.agents/notes/base-ui-audit.md#checkbox-base-uireactcheckbox)                                                 | 21      | 12      | 0      | 6       | 0       | 3      |
 | [RadioGroup + Radio](.agents/notes/base-ui-audit.md#radiogroup--radio-base-uireactradio-group-base-uireactradio)         | 18      | 10      | 0      | 5       | 0       | 3      |
 | [Switch](.agents/notes/base-ui-audit.md#switch-base-uireactswitch)                                                       | 17      | 10      | 1      | 4       | 0       | 2      |
-| [Slider](.agents/notes/base-ui-audit.md#slider-base-uireactslider)                                                       | 29      | 14      | 0      | 13      | 1       | 1      |
+| [Slider](.agents/notes/base-ui-audit.md#slider-base-uireactslider)                                                       | 29      | 14      | 1      | 13      | 0       | 1      |
 | [Menu](.agents/notes/base-ui-audit.md#menu-base-uireactmenu) (with the inline Dropdown and the color picker format menu) | 73      | 33      | 1      | 35      | 0       | 4      |
 | [DirectionProvider](.agents/notes/base-ui-audit.md#directionprovider-base-uireactdirection-provider)                     | 5       | 1       | 0      | 0       | 0       | 4      |
-| [Select](.agents/notes/base-ui-audit.md#select-base-uireactselect)                                                       | 44      | 13      | 2      | 26      | 1       | 2      |
-| [Combobox](.agents/notes/base-ui-audit.md#combobox-base-uireactcombobox)                                                 | 47      | 14      | 4      | 27      | 1       | 1      |
+| [Select](.agents/notes/base-ui-audit.md#select-base-uireactselect)                                                       | 44      | 13      | 3      | 26      | 0       | 2      |
+| [Combobox](.agents/notes/base-ui-audit.md#combobox-base-uireactcombobox)                                                 | 47      | 14      | 5      | 27      | 0       | 1      |
 | [Dialog](.agents/notes/base-ui-audit.md#dialog-base-uireactdialog) (with the mobile drawer)                              | 32      | 17      | 0      | 15      | 0       | 0      |
 | [Tooltip](.agents/notes/base-ui-audit.md#tooltip-base-uireacttooltip)                                                    | 23      | 11      | 0      | 11      | 0       | 1      |
 | [ScrollArea](.agents/notes/base-ui-audit.md#scrollarea-base-uireactscroll-area)                                          | 31      | 11      | 0      | 18      | 0       | 2      |
 | [Popover](.agents/notes/base-ui-audit.md#popover-base-uireactpopover)                                                    | 19      | 9       | 6      | 0       | 0       | 4      |
-| **Total**                                                                                                                | **426** | **190** | **17** | **182** | **3**   | **34** |
+| **Total**                                                                                                                | **426** | **190** | **20** | **182** | **0**   | **34** |
 
 The audit's [Summary](.agents/notes/base-ui-audit.md#summary) groups what is left by cause.
 
