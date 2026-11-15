@@ -1,6 +1,6 @@
-import { describe, expect, test } from 'bun:test';
 import type { KeyEvent } from '@ghia/solid';
 import { createRoot, createSignal } from 'solid-js';
+import { describe, expect, test } from 'vitest';
 import { MENU_TYPEAHEAD_RESET_MS } from '../../floating-ui-solid/hooks';
 import { createMenuList } from './menu-list';
 

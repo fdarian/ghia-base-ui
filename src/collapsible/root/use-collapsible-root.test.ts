@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'bun:test';
+import { describe, expect, test } from 'vitest';
 import { createCollapsibleRoot } from './use-collapsible-root';
 
 describe('createCollapsibleRoot', () => {

@@ -30,7 +30,7 @@
 		"build": "tsdown",
 		"check": "pnpm check:type && pnpm check:test",
 		"check:type": "tsc",
-		"check:test": "bun test",
+		"check:test": "bun --bun vitest run",
 		"format": "biome check --write",
 		"changeset": "changeset",
 		"ci:version": "changeset version",
@@ -44,11 +44,15 @@
 	"devDependencies": {
 		"@biomejs/biome": "latest",
 		"@changesets/cli": "^3.0.3",
-		"@ghia/solid": "0.11.1",
+		"@ghia/native": "link:../ghia/packages/native",
+		"@ghia/solid": "link:../ghia/packages/solid",
 		"@total-typescript/tsconfig": "latest",
 		"@types/bun": "^1.4.2",
+		"ghia": "link:../ghia/packages/ghia",
 		"solid-js": "1.9.15",
 		"tsdown": "^0.23.4",
-		"typescript": "^7.0.2"
+		"typescript": "^7.0.2",
+		"vite": "^8.0.0",
+		"vitest": "^4.0.18"
 	}
 }

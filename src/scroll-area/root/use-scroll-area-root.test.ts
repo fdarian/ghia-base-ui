@@ -1,6 +1,6 @@
-import { describe, expect, test } from 'bun:test';
 import type { DomEvent, HostElement, KeyEvent } from '@ghia/solid';
 import { createRoot } from 'solid-js';
+import { describe, expect, test } from 'vitest';
 import { createScrollAreaRoot } from './use-scroll-area-root';
 
 /** A scroller as `@ghia/native` reports it: integer sizes, and a `scrollTop` that `scrollTo` clamps to `[0, scrollHeight - clientHeight]`, like Chrome. */

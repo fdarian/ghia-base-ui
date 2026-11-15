@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'bun:test';
+import { describe, expect, test } from 'vitest';
 import { getDecimalPrecision, roundValueToStep } from './round-value-to-step';
 
 describe('getDecimalPrecision', () => {

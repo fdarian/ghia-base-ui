@@ -1,4 +1,4 @@
-import { expect, test } from 'bun:test';
+import { expect, test } from 'vitest';
 import { contains } from './filter';
 
 test('an empty query matches everything', () => {

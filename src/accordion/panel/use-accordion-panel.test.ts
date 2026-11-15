@@ -1,5 +1,5 @@
-import { describe, expect, test } from 'bun:test';
 import { createRoot } from 'solid-js';
+import { describe, expect, test } from 'vitest';
 import { createAccordionItem } from '../item/use-accordion-item';
 import { createAccordionRoot } from '../root/use-accordion-root';
 import { createAccordionPanel } from './use-accordion-panel';

@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'bun:test';
+import { describe, expect, test } from 'vitest';
 import { createTypeahead, matchTypeahead } from './use-typeahead';
 
 const labels = ['Apple', 'Avocado', 'Banana', 'Blueberry', 'Cherry'];
