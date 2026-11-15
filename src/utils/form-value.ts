@@ -35,7 +35,7 @@ export function FormValue(props: {
 		onFocus: () => {
 			const target = props.focusTarget();
 			if (target === undefined) throw new Error('Form value has no control');
-			renderer.focusElement?.(target.id);
+			renderer.focusElement?.(target.nativeId);
 		},
 		style: {
 			position: 'absolute',

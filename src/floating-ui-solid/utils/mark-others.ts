@@ -16,7 +16,7 @@ function hideOutside(popup: HostElement) {
 	for (;;) {
 		const parent = child.parent;
 		if (parent === null) break;
-		for (const sibling of parent.children) {
+		for (const sibling of parent.childList) {
 			if (sibling === child || sibling.kind !== 'element') continue;
 			if (sibling.props.get('aria-hidden') === true) continue;
 			setProp(sibling, 'aria-hidden', true);

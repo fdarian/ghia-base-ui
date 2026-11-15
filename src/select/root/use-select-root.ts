@@ -210,7 +210,8 @@ export function createSelectRoot<
 			scroller !== undefined &&
 			scroller.mounted &&
 			scroller.matches(':focus-within');
-		if (inPopup || document.activeElement === null) triggerElement.focus();
+		if (inPopup || document.activeElement === document.body)
+			triggerElement.focus();
 	};
 	const close = () => {
 		clearTimeout(pickTimer);

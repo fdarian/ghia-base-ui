@@ -13,7 +13,8 @@ import { document, type HostElement, type HostMouseEvent } from '@ghia/solid';
 export function refocusAfterPress(trigger: HostElement | null | undefined) {
 	if (trigger === null || trigger === undefined) return;
 	setTimeout(() => {
-		if (trigger.mounted && document.activeElement === null) trigger.focus();
+		if (trigger.mounted && document.activeElement === document.body)
+			trigger.focus();
 	}, 0);
 }
 

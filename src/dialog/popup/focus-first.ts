@@ -12,7 +12,10 @@ export function FocusFirst(props: { popup: () => HostElement | undefined }) {
 		if (popup === undefined)
 			throw new Error('FocusFirst: the popup is not mounted');
 		// Not synchronous: native's tab order exists only once the popup has painted (ghia README, "Dialog"), so `focusNextWithin` from mount finds no stop, and `@ghia/solid`'s own focus on the popup lands after this mount. A synchronous call was tried and left focus on the popup.
-		const timer = setTimeout(() => renderer.focusNextWithin?.(popup.id), 0);
+		const timer = setTimeout(
+			() => renderer.focusNextWithin?.(popup.nativeId),
+			0,
+		);
 		onCleanup(() => clearTimeout(timer));
 	});
 	return null;

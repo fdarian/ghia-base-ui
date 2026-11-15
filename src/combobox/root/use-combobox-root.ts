@@ -152,7 +152,7 @@ export function createComboboxRoot<Item extends ComboboxRootItem>(
 	const focusInput = () => {
 		if (inputElement === undefined)
 			throw new Error('Combobox input is not mounted');
-		renderer.focusElement?.(inputElement.id);
+		renderer.focusElement?.(inputElement.nativeId);
 	};
 	const select = (item: Item) => {
 		if (item.disabled === true) return;
@@ -281,9 +281,9 @@ export function createComboboxRoot<Item extends ComboboxRootItem>(
 		const item = filtered()[index];
 		if (item !== undefined) select(item);
 	};
-	const onChange = (event: DomEvent) => {
+	const onInput = (event: DomEvent) => {
 		const text = event.value;
-		if (text === undefined) throw new Error('Combobox change without a value');
+		if (text === undefined) throw new Error('Combobox input without a value');
 		setInputText(text);
 		// Emptying the field drops the pick.
 		if (text === '' && value() !== null) commitValue(null);
@@ -354,7 +354,7 @@ export function createComboboxRoot<Item extends ComboboxRootItem>(
 				return options.disabled() ? -1 : undefined;
 			},
 			onMouseDown: openPopup,
-			onChange,
+			onInput,
 			onKeyDown,
 		},
 		inputElement: () => inputElement,
