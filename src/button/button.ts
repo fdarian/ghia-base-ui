@@ -58,6 +58,6 @@ export function createButton(options: ButtonOptions = {}) {
 					return disabled() ? true : undefined;
 				},
 			},
-		) as Record<string, unknown> & ButtonAria,
+		) as ReturnType<typeof buttonProps> & ButtonAria,
 	};
 }
