@@ -32,16 +32,6 @@ describe('createInput', () => {
 		expect(changes).toEqual(['xy']);
 	});
 
-	test('passes the event in the details', () => {
-		const event = edit('q');
-		const seen: DomEvent[] = [];
-		const input = createInput({
-			onValueChange: (_value, details) => seen.push(details.event),
-		});
-		input.inputProps.onInput(event);
-		expect(seen).toEqual([event]);
-	});
-
 	test('disabled follows the accessor and defaults to false', () => {
 		let disabled = false;
 		const input = createInput({ disabled: () => disabled });

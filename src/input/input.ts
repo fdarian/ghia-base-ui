@@ -1,15 +1,11 @@
 import type { DomEvent } from '@ghia/solid';
 import { createSignal } from 'solid-js';
 
-export interface InputChangeEventDetails {
-	event: DomEvent;
-}
-
 export interface InputOptions {
 	/** Controlled value. While it returns a string the input never holds the value itself. */
 	value?: () => string | undefined;
 	defaultValue?: string;
-	onValueChange?: (value: string, details: InputChangeEventDetails) => void;
+	onValueChange?: (value: string) => void;
 	disabled?: () => boolean;
 }
 
@@ -40,7 +36,7 @@ export function createInput(options: InputOptions) {
 				const next = event.value;
 				if (next === undefined) throw new Error('Input edit without a value');
 				if (options.value?.() === undefined) setInternalValue(next);
-				options.onValueChange?.(next, { event });
+				options.onValueChange?.(next);
 			},
 		},
 	};
