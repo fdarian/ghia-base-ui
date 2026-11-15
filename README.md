@@ -8,8 +8,6 @@ Each primitive is a `create*` function that returns state and prop objects to sp
 
 This is a port of only what [Fluid Functionalism](https://github.com/fdarian/fluid-functionalism-gpuix) (FF) uses: accordion, collapsible, tabs, checkbox, checkbox-group, radio, radio-group, switch, slider, menu, select, combobox, dialog, drawer, tooltip and scroll-area, plus the shared pieces under `internals/`, `floating-ui-solid/` and `utils/`. Base UI parts and props FF never touches are not ported. FF consumes the source directly, with no build step; everyone else installs the built package from npm.
 
-Where the port differs from Base UI 1.9.0, [BASE-UI-AUDIT.md](BASE-UI-AUDIT.md) says so row by row.
-
 ## Install
 
 ```bash
@@ -66,7 +64,5 @@ Run `pnpm install` here; `@ghia/solid` comes from npm. Do this only for a standa
 
 ## More
 
-- [UPSTREAM.md](UPSTREAM.md): the Base UI pin, how to sync with a new release, the upstream-to-port file map and how the API differs from React's.
-- [BASE-UI-AUDIT.md](BASE-UI-AUDIT.md): Base UI 1.9.0's behaviour against this port, per primitive.
 - [AGENTS.md](AGENTS.md): orientation for coding agents working in this repo.
 - [LICENSE](LICENSE): MIT. Base UI is MIT, Copyright (c) 2019 Material-UI SAS.

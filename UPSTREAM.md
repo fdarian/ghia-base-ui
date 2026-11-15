@@ -3,7 +3,7 @@
 This is a port of **[Base UI](https://github.com/mui/base-ui)** (`@base-ui/react`, MIT, Copyright (c) MUI) to Solid
 on `@ghia/solid`, limited to the primitives and props that [Fluid Functionalism](https://github.com/fdarian/fluid-functionalism-gpuix)
 (FF) uses. Nothing here is a git fork: the upstream is React and DOM, so every file is rewritten, and staying current
-means reading upstream diffs and porting them by hand. [BASE-UI-AUDIT.md](BASE-UI-AUDIT.md) records where the port
+means reading upstream diffs and porting them by hand. [.agents/notes/base-ui-audit.md](.agents/notes/base-ui-audit.md) records where the port
 still differs; this file is how to keep it in step.
 
 ## The pin
@@ -42,7 +42,7 @@ git -C ~/.claude/notes/base-ui-source checkout v1.9.0
    Drop `--stat` and narrow the paths to read one component's diff. Folders upstream has and the port does not
    (`field`, `toast`, `navigation-menu` and the rest) are out of scope until FF uses them.
 2. **Walk the audit rows of every changed file.** The audit's "Base UI ref" column cites upstream as
-   `<folder>/<part>/<File>.tsx:lines`, so `grep -n 'accordion/root/AccordionRoot' BASE-UI-AUDIT.md` lists the rows a
+   `<folder>/<part>/<File>.tsx:lines`, so `grep -n 'accordion/root/AccordionRoot' .agents/notes/base-ui-audit.md` lists the rows a
    change to that file can touch. For each: does the behaviour still hold? Update the port and the row's Status and
    Notes; add a row for a new behaviour FF uses. Upstream line numbers move with every edit, so re-pin the "Base UI
    ref" cells of changed files as you go.
@@ -52,7 +52,7 @@ git -C ~/.claude/notes/base-ui-source checkout v1.9.0
    `pnpm check` in FF, which installs and links this folder; this repo's own `pnpm check` is `tsc` plus headless
    `bun test`.
 5. **Move the pin.** Change the version, tag and commit in the table above, the header of
-   [BASE-UI-AUDIT.md](BASE-UI-AUDIT.md), `AGENTS.md`, `README.md` and the `package.json` description.
+   [.agents/notes/base-ui-audit.md](.agents/notes/base-ui-audit.md), `AGENTS.md`, `README.md` and the `package.json` description.
 
 ## File map
 
@@ -160,7 +160,7 @@ Base UI is React compound components; this port is headless `create*` functions.
 
 ## Deviations
 
-[BASE-UI-AUDIT.md](BASE-UI-AUDIT.md) compares one primitive per section, limited to the parts and props FF uses, against
+[.agents/notes/base-ui-audit.md](.agents/notes/base-ui-audit.md) compares one primitive per section, limited to the parts and props FF uses, against
 Base UI 1.9.0's source and this port, row by row. Port refs read `src/...:lines` for this repo and
 `ff:src/...:lines` for code that stayed in FF. Each row has one **Status**:
 
@@ -178,27 +178,27 @@ Base UI 1.9.0's source and this port, row by row. Port refs read `src/...:lines`
   `asChild` button props, the inline `Dropdown` panel, which is FF's own code, the popover's modal mode, portal,
   trigger id and Title / Description names, nested submenus).
 
-| Section                                                                                                    | Rows    | ported  | gap    | fixed   | blocked | n/a    |
-| ---------------------------------------------------------------------------------------------------------- | ------- | ------- | ------ | ------- | ------- | ------ |
-| [Accordion](BASE-UI-AUDIT.md#accordion-base-uireactaccordion)                                              | 20      | 9       | 1      | 8       | 0       | 2      |
-| [Collapsible](BASE-UI-AUDIT.md#collapsible-base-uireactcollapsible)                                        | 11      | 7       | 0      | 3       | 0       | 1      |
-| [Tabs](BASE-UI-AUDIT.md#tabs-base-uireacttabs)                                                             | 25      | 12      | 2      | 9       | 0       | 2      |
-| [Button](BASE-UI-AUDIT.md#button-base-uireactbutton)                                                       | 11      | 7       | 0      | 2       | 0       | 2      |
-| [Checkbox](BASE-UI-AUDIT.md#checkbox-base-uireactcheckbox)                                                 | 21      | 12      | 0      | 6       | 0       | 3      |
-| [RadioGroup + Radio](BASE-UI-AUDIT.md#radiogroup--radio-base-uireactradio-group-base-uireactradio)         | 18      | 10      | 0      | 5       | 0       | 3      |
-| [Switch](BASE-UI-AUDIT.md#switch-base-uireactswitch)                                                       | 17      | 10      | 1      | 4       | 0       | 2      |
-| [Slider](BASE-UI-AUDIT.md#slider-base-uireactslider)                                                       | 29      | 14      | 0      | 13      | 1       | 1      |
-| [Menu](BASE-UI-AUDIT.md#menu-base-uireactmenu) (with the inline Dropdown and the color picker format menu) | 73      | 33      | 1      | 35      | 0       | 4      |
-| [DirectionProvider](BASE-UI-AUDIT.md#directionprovider-base-uireactdirection-provider)                     | 5       | 1       | 0      | 0       | 0       | 4      |
-| [Select](BASE-UI-AUDIT.md#select-base-uireactselect)                                                       | 44      | 13      | 2      | 26      | 1       | 2      |
-| [Combobox](BASE-UI-AUDIT.md#combobox-base-uireactcombobox)                                                 | 47      | 14      | 4      | 27      | 1       | 1      |
-| [Dialog](BASE-UI-AUDIT.md#dialog-base-uireactdialog) (with the mobile drawer)                              | 32      | 17      | 0      | 15      | 0       | 0      |
-| [Tooltip](BASE-UI-AUDIT.md#tooltip-base-uireacttooltip)                                                    | 23      | 11      | 0      | 11      | 0       | 1      |
-| [ScrollArea](BASE-UI-AUDIT.md#scrollarea-base-uireactscroll-area)                                          | 31      | 11      | 0      | 18      | 0       | 2      |
-| [Popover](BASE-UI-AUDIT.md#popover-base-uireactpopover)                                                    | 19      | 9       | 6      | 0       | 0       | 4      |
-| **Total**                                                                                                  | **426** | **190** | **17** | **182** | **3**   | **34** |
+| Section                                                                                                                  | Rows    | ported  | gap    | fixed   | blocked | n/a    |
+| ------------------------------------------------------------------------------------------------------------------------ | ------- | ------- | ------ | ------- | ------- | ------ |
+| [Accordion](.agents/notes/base-ui-audit.md#accordion-base-uireactaccordion)                                              | 20      | 9       | 1      | 8       | 0       | 2      |
+| [Collapsible](.agents/notes/base-ui-audit.md#collapsible-base-uireactcollapsible)                                        | 11      | 7       | 0      | 3       | 0       | 1      |
+| [Tabs](.agents/notes/base-ui-audit.md#tabs-base-uireacttabs)                                                             | 25      | 12      | 2      | 9       | 0       | 2      |
+| [Button](.agents/notes/base-ui-audit.md#button-base-uireactbutton)                                                       | 11      | 7       | 0      | 2       | 0       | 2      |
+| [Checkbox](.agents/notes/base-ui-audit.md#checkbox-base-uireactcheckbox)                                                 | 21      | 12      | 0      | 6       | 0       | 3      |
+| [RadioGroup + Radio](.agents/notes/base-ui-audit.md#radiogroup--radio-base-uireactradio-group-base-uireactradio)         | 18      | 10      | 0      | 5       | 0       | 3      |
+| [Switch](.agents/notes/base-ui-audit.md#switch-base-uireactswitch)                                                       | 17      | 10      | 1      | 4       | 0       | 2      |
+| [Slider](.agents/notes/base-ui-audit.md#slider-base-uireactslider)                                                       | 29      | 14      | 0      | 13      | 1       | 1      |
+| [Menu](.agents/notes/base-ui-audit.md#menu-base-uireactmenu) (with the inline Dropdown and the color picker format menu) | 73      | 33      | 1      | 35      | 0       | 4      |
+| [DirectionProvider](.agents/notes/base-ui-audit.md#directionprovider-base-uireactdirection-provider)                     | 5       | 1       | 0      | 0       | 0       | 4      |
+| [Select](.agents/notes/base-ui-audit.md#select-base-uireactselect)                                                       | 44      | 13      | 2      | 26      | 1       | 2      |
+| [Combobox](.agents/notes/base-ui-audit.md#combobox-base-uireactcombobox)                                                 | 47      | 14      | 4      | 27      | 1       | 1      |
+| [Dialog](.agents/notes/base-ui-audit.md#dialog-base-uireactdialog) (with the mobile drawer)                              | 32      | 17      | 0      | 15      | 0       | 0      |
+| [Tooltip](.agents/notes/base-ui-audit.md#tooltip-base-uireacttooltip)                                                    | 23      | 11      | 0      | 11      | 0       | 1      |
+| [ScrollArea](.agents/notes/base-ui-audit.md#scrollarea-base-uireactscroll-area)                                          | 31      | 11      | 0      | 18      | 0       | 2      |
+| [Popover](.agents/notes/base-ui-audit.md#popover-base-uireactpopover)                                                    | 19      | 9       | 6      | 0       | 0       | 4      |
+| **Total**                                                                                                                | **426** | **190** | **17** | **182** | **3**   | **34** |
 
-The audit's [Summary](BASE-UI-AUDIT.md#summary) groups what is left by cause.
+The audit's [Summary](.agents/notes/base-ui-audit.md#summary) groups what is left by cause.
 
 ### FF-vs-Base-UI conflicts
 
