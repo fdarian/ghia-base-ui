@@ -4,7 +4,9 @@ What `@ghia/solid` and `@ghia/native` (a GPU-rendered runtime with a DOM-like AP
 
 ## Blocked by ghia
 
-Nothing is blocked as of `@ghia/solid` after 0.12.1 (the dev dependency is a link to ghia's HEAD). A capability ghia lacks goes here with the behaviour it blocks; probe a row again before treating it as permanent.
+One row is blocked as of `@ghia/solid` after 0.12.1 (the dev dependency is a link to ghia's HEAD). A capability ghia lacks goes here with the behaviour it blocks; probe a row again before treating it as permanent.
+
+- `<img>` `onLoad` / `onError` payloads carry no `src` (ghia `docs/reference.md:6902-6903`; `onLoad` has `naturalWidth` and `naturalHeight`): `createAvatarImage` cannot tell a late event of a replaced `src` from the current one, so it ignores events only while `src` is empty. Audit: Avatar, "A late `load` or `error` of a replaced `src` is ignored".
 
 ## Gaps: ghia has the API, the port has not adopted it
 

@@ -6,7 +6,7 @@ Each primitive is a `create*` function that returns state and prop objects to sp
 
 ## Status
 
-This is a port of only what [Fluid Functionalism](https://github.com/fdarian/ghia-fluid-functionalism) (FF) uses: accordion, collapsible, tabs, checkbox, checkbox-group, radio, radio-group, switch, slider, menu, select, combobox, dialog, drawer, tooltip and scroll-area, plus the shared pieces under `internals/`, `floating-ui-solid/` and `utils/`. Base UI parts and props FF never touches are not ported. FF installs the built package from npm like everyone else.
+This is a port of only what [Fluid Functionalism](https://github.com/fdarian/ghia-fluid-functionalism) (FF) and `ghia-solid-stack` use: accordion, collapsible, tabs, checkbox, checkbox-group, radio, radio-group, switch, slider, menu, select, combobox, dialog, drawer, tooltip and scroll-area (FF), avatar, input and button (`ghia-solid-stack`), plus the shared pieces under `internals/`, `floating-ui-solid/` and `utils/`. Base UI parts and props neither consumer touches are not ported. FF installs the built package from npm like everyone else.
 
 ## Install
 

@@ -2,7 +2,7 @@
 
 This is a port of **[Base UI](https://github.com/mui/base-ui)** (`@base-ui/react`, MIT, Copyright (c) MUI) to Solid
 on `@ghia/solid`, limited to the primitives and props that [Fluid Functionalism](https://github.com/fdarian/fluid-functionalism-gpuix)
-(FF) uses. Nothing here is a git fork: the upstream is React and DOM, so every file is rewritten, and staying current
+(FF) or `ghia-solid-stack` (a benchmark app on ghia; it is the only user of `avatar`, `input` and `button`) uses. Nothing here is a git fork: the upstream is React and DOM, so every file is rewritten, and staying current
 means reading upstream diffs and porting them by hand. [.agents/notes/base-ui-audit.md](.agents/notes/base-ui-audit.md) records where the port
 still differs; this file is how to keep it in step.
 
@@ -33,18 +33,18 @@ git -C ~/.claude/notes/base-ui-source checkout v1.9.0
    B=~/.claude/notes/base-ui-source
    git -C $B fetch --tags
    git -C $B diff --stat v1.9.0 <new-tag> -- \
-     packages/react/src/{accordion,collapsible,tabs,checkbox,checkbox-group,radio,radio-group,switch,slider,menu,select,combobox,dialog,drawer,tooltip,scroll-area,popover} \
-     packages/react/src/internals/{composite,filter.ts,useTransitionStatus.ts,useAnchorPositioning.ts} \
+     packages/react/src/{accordion,collapsible,tabs,checkbox,checkbox-group,radio,radio-group,switch,slider,menu,select,combobox,dialog,drawer,tooltip,scroll-area,popover,avatar,input,button,field/control} \
+     packages/react/src/internals/{composite,filter.ts,useTransitionStatus.ts,useAnchorPositioning.ts,use-button} \
      packages/react/src/floating-ui-react/hooks/{useClick,useTypeahead,useHoverReferenceInteraction,useHoverFloatingInteraction,useHoverShared}.ts \
      packages/react/src/floating-ui-react/{safePolygon.ts,utils/markOthers.ts,utils/element.ts}
    ```
 
    Drop `--stat` and narrow the paths to read one component's diff. Folders upstream has and the port does not
-   (`field`, `toast`, `navigation-menu` and the rest) are out of scope until FF uses them.
+   (`field` beyond `field/control`, `toast`, `navigation-menu` and the rest) are out of scope until FF or `ghia-solid-stack` uses them.
 2. **Walk the audit rows of every changed file.** The audit's "Base UI ref" column cites upstream as
    `<folder>/<part>/<File>.tsx:lines`, so `grep -n 'accordion/root/AccordionRoot' .agents/notes/base-ui-audit.md` lists the rows a
    change to that file can touch. For each: does the behaviour still hold? Update the port and the row's Status and
-   Notes; add a row for a new behaviour FF uses. Upstream line numbers move with every edit, so re-pin the "Base UI
+   Notes; add a row for a new behaviour FF or ghia-solid-stack uses. Upstream line numbers move with every edit, so re-pin the "Base UI
    ref" cells of changed files as you go.
 3. **Port each change** to the file the [map](#file-map) names, following [PORTING.md](PORTING.md), then refresh the port refs in the audit rows
    (`src/...:lines` for this repo, `ff:src/...:lines` for FF code).
@@ -101,6 +101,11 @@ kebab-case and the exported function is `create*`. [PORTING.md](PORTING.md#namin
 | `scroll-area/root/ScrollAreaRoot.tsx`                                                                                                                                                      | `scroll-area/root/use-scroll-area-root.ts`                                                                                                                                  |
 | `scroll-area/scrollbar/ScrollAreaScrollbar.tsx`                                                                                                                                            | `scroll-area/scrollbar/use-scroll-area-scrollbar.ts`                                                                                                                        |
 | `scroll-area/viewport/ScrollAreaViewport.tsx` (thumb sizing and position)                                                                                                                  | `scroll-area/viewport/get-thumb.ts` (and its test)                                                                                                                          |
+| `avatar/root/AvatarRoot.tsx` (with `AvatarRootContext.ts`)                                                                                                                                 | `avatar/root/avatar-root.ts` (and its test)                                                                                                                                 |
+| `avatar/image/AvatarImage.tsx`, `useImageLoadingStatus.ts`                                                                                                                                 | `avatar/image/avatar-image.ts` (and its test)                                                                                                                               |
+| `avatar/fallback/AvatarFallback.tsx`                                                                                                                                                       | `avatar/fallback/avatar-fallback.ts` (and its test)                                                                                                                         |
+| `input/Input.tsx` (a `Field.Control` without `Field`: `field/control/FieldControl.tsx`)                                                                                                    | `input/input.ts` (and its test)                                                                                                                                             |
+| `button/Button.tsx`, `internals/use-button/useButton.ts` (the non-native path)                                                                                                             | `button/button.ts` (and its test)                                                                                                                                           |
 | `internals/composite/composite.ts`                                                                                                                                                         | `internals/composite/composite.ts` (and its test)                                                                                                                           |
 | `internals/composite/root/useCompositeRoot.ts`                                                                                                                                             | `internals/composite/root/use-composite-root.ts`                                                                                                                            |
 | `internals/filter.ts`                                                                                                                                                                      | `internals/filter.ts` (`contains` only; and its test)                                                                                                                       |
@@ -143,7 +148,7 @@ Headless `create*` functions instead of React components: see [PORTING.md](PORTI
 
 ## Deviations
 
-[.agents/notes/base-ui-audit.md](.agents/notes/base-ui-audit.md) compares one primitive per section, limited to the parts and props FF uses, against
+[.agents/notes/base-ui-audit.md](.agents/notes/base-ui-audit.md) compares one primitive per section, limited to the parts and props FF or ghia-solid-stack uses, against
 Base UI 1.9.0's source and this port, row by row. Port refs read `src/...:lines` for this repo and
 `ff:src/...:lines` for code that stayed in FF. Each row has one **Status**:
 

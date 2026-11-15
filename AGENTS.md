@@ -1,9 +1,9 @@
-Headless Base UI primitives for Solid on `@ghia/solid`, ported from `@base-ui/react` 1.9.0 (tag v1.9.0, ad7ecda). Published to npm as `ghia-base-ui`; no styling, no theme tokens. Only what `~/code/fdarian/ghia-fluid-functionalism` (FF) uses is ported. FF and every other consumer install the tsdown build in `dist/` from npm.
+Headless Base UI primitives for Solid on `@ghia/solid`, ported from `@base-ui/react` 1.9.0 (tag v1.9.0, ad7ecda). Published to npm as `ghia-base-ui`; no styling, no theme tokens. Only what a known consumer uses is ported: `~/code/fdarian/ghia-fluid-functionalism` (FF), and `ghia-solid-stack` (a benchmark app on ghia; it needs `avatar`, `input` and `button`, which FF does not use). FF and every other consumer install the tsdown build in `dist/` from npm.
 
 ## Layout
 
 - `src/<folder>/<part>/<kebab-name>.ts` mirrors `packages/react/src/<folder>/<part>/<PascalName>.tsx` upstream (reference clone: `~/.claude/notes/base-ui-source`). Each folder has an `index.ts`; `exports` is `"./*": "./src/*/index.ts"` (what a local checkout resolves), so consumers import `ghia-base-ui/<folder>`, nested folders included (`.../internals/composite`). `publishConfig.exports` repoints the same pattern at `dist/<folder>/index.{js,d.ts}`, which `tsdown.config.ts` emits (one entry per `src/**/index.ts`, peers external).
-- Component folders: `accordion collapsible tabs checkbox checkbox-group radio radio-group switch slider menu select combobox dialog drawer popover tooltip scroll-area`. Each exports `create*` functions returning state and prop objects, not components.
+- Component folders: `accordion collapsible tabs checkbox checkbox-group radio radio-group switch slider menu select combobox dialog drawer popover tooltip scroll-area avatar input button`. Each exports `create*` functions returning state and prop objects, not components.
 - Shared: `internals/` (composite key navigation and `createRowList`, `filter`, `use-transition-status`, `use-anchor-positioning`), `floating-ui-solid/` (click, typeahead, `safe-polygon` with the hover tracker that runs it, `mark-others`), `utils/` (`pointer-capture`, `form-value`).
 - [UPSTREAM.md](UPSTREAM.md) — the pin, how to sync, the upstream-to-port file map and the port-only files; read before moving the pin or adding a primitive.
 - [PORTING.md](PORTING.md) — how to translate Base UI's React into this repo's Solid 1, and how to use ZerNico's Solid 2 port as the pattern reference; read before porting or filling an audit gap.
@@ -26,7 +26,7 @@ Headless Base UI primitives for Solid on `@ghia/solid`, ported from `@base-ui/re
 
 ## Rules
 
-- Port only what FF uses; no unused parts or props "for completeness". Parts FF styles itself (`Portal`, `Positioner`, `Backdrop`, `Arrow`, `Indicator`) are left out on purpose.
+- Port only what FF or ghia-solid-stack uses; no unused parts or props "for completeness". Parts FF styles itself (`Portal`, `Positioner`, `Backdrop`, `Arrow`, `Indicator`) are left out on purpose.
 - Where Base UI and FF disagree, FF wins (each audit section lists its "FF-vs-Base-UI conflicts"). The one exception is popup focus, which follows Base UI.
 - Don't move the 1.9.0 pin on merit: it is whatever FF's upstream (`mickadesign/fluid-functionalism`) pins.
 

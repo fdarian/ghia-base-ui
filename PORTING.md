@@ -42,7 +42,8 @@ Upstream paths are relative to `packages/react/src/`. ZerNico's are the same pat
 The exported function is always `create*`. The file prefix is not uniform: `use-` in `accordion`, `collapsible`, `tabs`,
 `select`, `combobox`, `dialog`, `drawer` and `scroll-area` (`use-accordion-root.ts`); none in `checkbox`, `checkbox-group`,
 `radio`, `radio-group`, `switch`, `slider`, `menu`, `tooltip` and `popover` (`menu-root.ts`). A new file follows its folder.
-For a new folder there is no rule yet: pick one and record it here.
+A new folder takes no prefix and names its files after the upstream part (`avatar/root/avatar-root.ts`), or after the
+component when upstream has one file (`button/button.ts`, `input/input.ts`); `avatar`, `input` and `button` do this.
 
 ## Public API differences
 
@@ -210,7 +211,7 @@ To fill a gap or port a change:
    what has no counterpart here: `useRenderElement` and `render`, `class` and `style` merging, the `Store` and its derived
    keys, SSR and hydration, Floating UI DOM, docs links.
 5. **Update the audit row** (`.agents/notes/base-ui-audit.md`): status, notes, the upstream line refs and the `src/...:lines`
-   refs, and add a row for new behaviour FF uses. Add a file to the [file map](UPSTREAM.md#file-map) if you created one.
+   refs, and add a row for new behaviour FF or ghia-solid-stack uses. Add a file to the [file map](UPSTREAM.md#file-map) if you created one.
 
 ### Solid 2 → Solid 1
 
